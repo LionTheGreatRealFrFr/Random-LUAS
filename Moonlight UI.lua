@@ -355,7 +355,7 @@ do
 end
 
 Library.AddToolTip = LPH_NO_VIRTUALIZE(function(self, InfoStr, HoverInstance)
-    local X, Y = Library:GetTextBounds(InfoStr, Library.Font, 14)
+    local X, Y = Library.GetTextBounds(InfoStr, Library.Font, 14)
     local Tooltip = Library:Create('Frame', {
         BackgroundColor3 = Library.MainColor,
         BorderColor3 = Library.OutlineColor,
@@ -1474,7 +1474,7 @@ do
         })
 
         if DoesWrap then
-            local Y = select(2, Library:GetTextBounds(Text, Library.Font, 14, NewVector2(TextLabel.AbsoluteSize.X, MathHuge)))
+            local Y = select(2, Library.GetTextBounds(Text, Library.Font, 14, NewVector2(TextLabel.AbsoluteSize.X, MathHuge)))
 
             TextLabel.Size = NewUDim2(1, -4, 0, Y)
         else
@@ -1494,7 +1494,7 @@ do
             TextLabel.Text = Text
 
             if DoesWrap then
-                local Y = select(2, Library:GetTextBounds(Text, Library.Font, 14, NewVector2(TextLabel.AbsoluteSize.X, MathHuge)))
+                local Y = select(2, Library.GetTextBounds(Text, Library.Font, 14, NewVector2(TextLabel.AbsoluteSize.X, MathHuge)))
 
                 TextLabel.Size = NewUDim2(1, -4, 0, Y)
             end
@@ -2910,7 +2910,7 @@ Library.SetWatermarkVisibility = LPH_NO_VIRTUALIZE(function(self, Bool)
     Library.Watermark.Visible = Bool
 end)
 Library.SetWatermark = LPH_NO_VIRTUALIZE(function(self, Text)
-    local X, Y = Library:GetTextBounds(Text, Library.Font, 14)
+    local X, Y = Library.GetTextBounds(Text, Library.Font, 14)
 
     Library.Watermark.Size = NewUDim2(0, X + 15, 0, (Y * 1.5) + 3)
 
@@ -2919,7 +2919,7 @@ Library.SetWatermark = LPH_NO_VIRTUALIZE(function(self, Text)
     Library.WatermarkText.Text = Text
 end)
 Library.Notify = LPH_NO_VIRTUALIZE(function(self, Text, Time)
-    local XSize, YSize = Library:GetTextBounds(Text, Library.Font, 14)
+    local XSize, YSize = Library.GetTextBounds(Text, Library.Font, 14)
 
     YSize = YSize + 7
 
@@ -3110,7 +3110,7 @@ Library.CreateWindow = LPH_NO_VIRTUALIZE(function(self, ...)
     local Text = Config.Title or ''
     local Font = Enum.Font.SourceSans
     local Size = 25
-    local Width = Library:GetTextBounds(Text, Font, Size)
+    local Width = Library.GetTextBounds(Text, Font, Size)
     local WindowLabel = Library:CreateLabel({
         Position = NewUDim2(0.5, 0, 0, 0),
         Size = NewUDim2(0, Width, 0, 25),
