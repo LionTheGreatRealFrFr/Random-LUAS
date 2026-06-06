@@ -1,6 +1,11 @@
 local Toggles = {}
 local Options = {}
 
+local HttpService = cloneref(game:GetService('HttpService'))
+
+local TextService = cloneref(game:GetService('TextService'))
+local TweenService = cloneref(game:GetService('TweenService'))
+
 getgenv().Toggles = Toggles
 getgenv().Options = Options
 
