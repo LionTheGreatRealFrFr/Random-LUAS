@@ -179,7 +179,7 @@ GetTeamsString = LPH_NO_VIRTUALIZE(function()
 
     return TeamList
 end)
-Library.SafeCallback = LPH_NO_VIRTUALIZE(function(self, f, ...)
+Library.SafeCallback = LPH_NO_VIRTUALIZE(function(f, ...)
     if (not f) then
         return
     end
@@ -199,12 +199,12 @@ Library.SafeCallback = LPH_NO_VIRTUALIZE(function(self, f, ...)
         return Library:Notify(event:sub(i + 1), 3)
     end
 end)
-Library.AttemptSave = LPH_NO_VIRTUALIZE(function(self)
+Library.AttemptSave = LPH_NO_VIRTUALIZE(function()
     if Library.SaveManager then
         Library.SaveManager:Save()
     end
 end)
-Library.Create = LPH_NO_VIRTUALIZE(function(self, Class, Properties)
+Library.Create = LPH_NO_VIRTUALIZE(function(Class, Properties)
     local _Instance = Class
 
     if type(Class) == 'string' then
@@ -217,7 +217,7 @@ Library.Create = LPH_NO_VIRTUALIZE(function(self, Class, Properties)
 
     return _Instance
 end)
-Library.ApplyTextStroke = LPH_NO_VIRTUALIZE(function(self, Inst)
+Library.ApplyTextStroke = LPH_NO_VIRTUALIZE(function(Inst)
     Inst.TextStrokeTransparency = 1
 
     Library:Create('UIStroke', {
@@ -232,7 +232,7 @@ local GetTableSize = LPH_NO_VIRTUALIZE(function(t)
     for _ in next, t do n += 1 end
     return n
 end)
-Library.CreateLabel = LPH_NO_VIRTUALIZE(function(self, Properties, IsHud)
+Library.CreateLabel = LPH_NO_VIRTUALIZE(function(Properties, IsHud)
     local _Instance = Library:Create('TextLabel', {
         BackgroundTransparency = 1,
         Font = Library.Font,
@@ -286,7 +286,7 @@ do
         end
     end)
 
-    Library.MakeDraggable = LPH_NO_VIRTUALIZE(function(self, Instance, Cutoff)
+    Library.MakeDraggable = LPH_NO_VIRTUALIZE(function(Instance, Cutoff)
         Instance.Active = true
 
         local cutoffHeight = Cutoff or 40
@@ -311,7 +311,7 @@ do
             }
         end)
     end)
-    Library.MakeResizable = LPH_NO_VIRTUALIZE(function(self, Frame, MinX, MinY, MaxX, MaxY)
+    Library.MakeResizable = LPH_NO_VIRTUALIZE(function(Frame, MinX, MinY, MaxX, MaxY)
         local Grip = Library:Create('TextButton', {
             Parent = Frame,
             AnchorPoint = NewVector2(1, 1),
@@ -354,7 +354,7 @@ do
     end)
 end
 
-Library.AddToolTip = LPH_NO_VIRTUALIZE(function(self, InfoStr, HoverInstance)
+Library.AddToolTip = LPH_NO_VIRTUALIZE(function(InfoStr, HoverInstance)
     local X, Y = Library.GetTextBounds(InfoStr, Library.Font, 14)
     local Tooltip = Library:Create('Frame', {
         BackgroundColor3 = Library.MainColor,
@@ -405,7 +405,7 @@ Library.AddToolTip = LPH_NO_VIRTUALIZE(function(self, InfoStr, HoverInstance)
         Tooltip.Visible = false
     end)
 end)
-Library.OnHighlight = LPH_NO_VIRTUALIZE(function(self, HighlightInstance, Instance, Properties, PropertiesDefault)
+Library.OnHighlight = LPH_NO_VIRTUALIZE(function(HighlightInstance, Instance, Properties, PropertiesDefault)
     Script.Function.Connection(HighlightInstance.MouseEnter, function()
         local Reg = Library.RegistryMap[Instance]
 
@@ -429,7 +429,7 @@ Library.OnHighlight = LPH_NO_VIRTUALIZE(function(self, HighlightInstance, Instan
         end
     end)
 end)
-Library.MouseIsOverOpenedFrame = LPH_NO_VIRTUALIZE(function(self)
+Library.MouseIsOverOpenedFrame = LPH_NO_VIRTUALIZE(function()
     for Frame, _ in next, Library.OpenedFrames do
         local AbsPos, AbsSize = Frame.AbsolutePosition, Frame.AbsoluteSize
 
@@ -438,22 +438,22 @@ Library.MouseIsOverOpenedFrame = LPH_NO_VIRTUALIZE(function(self)
         end
     end
 end)
-Library.IsMouseOverFrame = LPH_NO_VIRTUALIZE(function(self, Frame)
+Library.IsMouseOverFrame = LPH_NO_VIRTUALIZE(function(Frame)
     local AbsPos, AbsSize = Frame.AbsolutePosition, Frame.AbsoluteSize
 
     if Mouse.X >= AbsPos.X and Mouse.X <= AbsPos.X + AbsSize.X and Mouse.Y >= AbsPos.Y and Mouse.Y <= AbsPos.Y + AbsSize.Y then
         return true
     end
 end)
-Library.UpdateDependencyBoxes = LPH_NO_VIRTUALIZE(function(self)
+Library.UpdateDependencyBoxes = LPH_NO_VIRTUALIZE(function()
     for _, Depbox in next, Library.DependencyBoxes do
         Depbox:Update()
     end
 end)
-Library.MapValue = LPH_NO_VIRTUALIZE(function(self, Value, MinA, MaxA, MinB, MaxB)
+Library.MapValue = LPH_NO_VIRTUALIZE(function(Value, MinA, MaxA, MinB, MaxB)
     return (1 - ((Value - MinA) / (MaxA - MinA))) * MinB + ((Value - MinA) / (MaxA - MinA)) * MaxB
 end)
-Library.GetTextBounds = LPH_NO_VIRTUALIZE(function(self, Text, Font, Size, Resolution)
+Library.GetTextBounds = LPH_NO_VIRTUALIZE(function(Text, Font, Size, Resolution)
     function RemoveTags(str)
         str = str:gsub('<br%s*/>', '\n')
 
@@ -465,7 +465,7 @@ Library.GetTextBounds = LPH_NO_VIRTUALIZE(function(self, Text, Font, Size, Resol
 
     return Bounds.X, Bounds.Y
 end)
-Library.GetDarkerColor = LPH_NO_VIRTUALIZE(function(self, Color)
+Library.GetDarkerColor = LPH_NO_VIRTUALIZE(function(Color)
     local H, S, V = Color3.toHSV(Color)
 
     return HSV(H, S, V / 1.5)
@@ -473,7 +473,7 @@ end)
 
 Library.AccentColorDark = Library:GetDarkerColor(Library.AccentColor)
 
-Library.AddToRegistry = LPH_NO_VIRTUALIZE(function(self, Instance, Properties, IsHud)
+Library.AddToRegistry = LPH_NO_VIRTUALIZE(function(Instance, Properties, IsHud)
     local Idx = #Library.Registry + 1
     local Data = {
         Instance = Instance,
@@ -489,15 +489,15 @@ Library.AddToRegistry = LPH_NO_VIRTUALIZE(function(self, Instance, Properties, I
         TableInsert(Library.HudRegistry, Data)
     end
 end)
-Library.UDim2OffsetToString = LPH_NO_VIRTUALIZE(function(self, udim2)
+Library.UDim2OffsetToString = LPH_NO_VIRTUALIZE(function(udim2)
     return string.format('%d, %d', udim2.X.Offset, udim2.Y.Offset)
 end)
-Library.StringToUDim2Offset = LPH_NO_VIRTUALIZE(function(self, str)
+Library.StringToUDim2Offset = LPH_NO_VIRTUALIZE(function(str)
     local x, y = str:match('([^,]+),%s*([^,]+)')
 
     return UDim2Offset(ToNumber(x), ToNumber(y))
 end)
-Library.RemoveFromRegistry = LPH_NO_VIRTUALIZE(function(self, Instance)
+Library.RemoveFromRegistry = LPH_NO_VIRTUALIZE(function(Instance)
     local Data = Library.RegistryMap[Instance]
 
     if Data then
@@ -515,7 +515,7 @@ Library.RemoveFromRegistry = LPH_NO_VIRTUALIZE(function(self, Instance)
         Library.RegistryMap[Instance] = nil
     end
 end)
-Library.UpdateColorsUsingRegistry = LPH_NO_VIRTUALIZE(function(self)
+Library.UpdateColorsUsingRegistry = LPH_NO_VIRTUALIZE(function()
     for Idx, Object in next, Library.Registry do
         for Property, ColorIdx in next, Object.Properties do
             if type(ColorIdx) == 'string' then
@@ -526,10 +526,10 @@ Library.UpdateColorsUsingRegistry = LPH_NO_VIRTUALIZE(function(self)
         end
     end
 end)
-Library.GiveSignal = LPH_NO_VIRTUALIZE(function(self, Signal)
+Library.GiveSignal = LPH_NO_VIRTUALIZE(function(Signal)
     TableInsert(Library.Signals, Signal)
 end)
-Library.Unload = LPH_NO_VIRTUALIZE(function(self)
+Library.Unload = LPH_NO_VIRTUALIZE(function()
     for Idx = #Library.Signals, 1, -1 do
         local Connection = table.remove(Library.Signals, Idx)
 
@@ -542,7 +542,7 @@ Library.Unload = LPH_NO_VIRTUALIZE(function(self)
 
     ScreenGui:Destroy()
 end)
-Library.OnUnload = LPH_NO_VIRTUALIZE(function(self, Callback)
+Library.OnUnload = LPH_NO_VIRTUALIZE(function(Callback)
     Library.OnUnload = Callback
 end)
 
@@ -2906,10 +2906,10 @@ do
     Library:MakeDraggable(KeybindOuter)
 end
 
-Library.SetWatermarkVisibility = LPH_NO_VIRTUALIZE(function(self, Bool)
+Library.SetWatermarkVisibility = LPH_NO_VIRTUALIZE(function(Bool)
     Library.Watermark.Visible = Bool
 end)
-Library.SetWatermark = LPH_NO_VIRTUALIZE(function(self, Text)
+Library.SetWatermark = LPH_NO_VIRTUALIZE(function(Text)
     local X, Y = Library.GetTextBounds(Text, Library.Font, 14)
 
     Library.Watermark.Size = NewUDim2(0, X + 15, 0, (Y * 1.5) + 3)
@@ -2918,7 +2918,7 @@ Library.SetWatermark = LPH_NO_VIRTUALIZE(function(self, Text)
 
     Library.WatermarkText.Text = Text
 end)
-Library.Notify = LPH_NO_VIRTUALIZE(function(self, Text, Time)
+Library.Notify = LPH_NO_VIRTUALIZE(function(Text, Time)
     local XSize, YSize = Library.GetTextBounds(Text, Library.Font, 14)
 
     YSize = YSize + 7
@@ -3028,7 +3028,7 @@ Library.Notify = LPH_NO_VIRTUALIZE(function(self, Text, Time)
         NotifyOuter:Destroy()
     end)
 end)
-Library.CreateWindow = LPH_NO_VIRTUALIZE(function(self, ...)
+Library.CreateWindow = LPH_NO_VIRTUALIZE(function(...)
     local Arguments = {...}
     local Config = {
         AnchorPoint = Vector2.zero,
